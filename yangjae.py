@@ -10,13 +10,10 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from datetime import date
 
-# https://nid.naver.com/nidlogin.login?url=https%3A%2F%2Fbooking.naver.com%2Fbooking%2F12%2Fbizes%2F714379%2Fitems%2F4559249
-# https://nid.naver.com/nidlogin.login?url=https%3A%2F%2Fbooking.naver.com%2Fbooking%2F12%2Fbizes%2F714379%2Fitems%2F4559345
-# https://nid.naver.com/nidlogin.login?url=https%3A%2F%2Fbooking.naver.com%2Fbooking%2F12%2Fbizes%2F714379%2Fitems%2F4559346
-# https://nid.naver.com/nidlogin.login?url=https%3A%2F%2Fbooking.naver.com%2Fbooking%2F12%2Fbizes%2F714379%2Fitems%2F4559349
-COURT_URL = "https://nid.naver.com/nidlogin.login?url=https%3A%2F%2Fbooking.naver.com%2Fbooking%2F12%2Fbizes%2F714379%2Fitems%2F4559249"
-TIME = '16:00'
-DATE = '"2022-09-28"'
+# https://nid.naver.com/nidlogin.login?url=https%3A%2F%2Fbooking.naver.com%2Fbooking%2F10%2Fbizes%2F210031%2Fitems%2F4444654%3FstartDate%3D2022-10-07%26endDate%3D2022-10-07
+COURT_URL = "https://nid.naver.com/nidlogin.login?url=https%3A%2F%2Fbooking.naver.com%2Fbooking%2F10%2Fbizes%2F210031%2Fitems%2F4444654%3FstartDate%3D2022-11-05%26endDate%3D2022-11-05"
+TIME = '14:00'
+DATE = '"2022-09-29"'
 BANK_NAME = '신한'
 
 user = {
@@ -94,7 +91,7 @@ driver.find_element(By.XPATH, '//button[@data-tst_submit_click="0"]').click()
 ##주문/결제
 
 #일반결제 클릭
-wait.until(ec.element_to_be_clickable((By.XPATH, '//span[contains(@class, "radio-checked")]')))
+wait.until(ec.text_to_be_present_in_element_attribute((By.XPATH, '//li[contains(@class, "_naverPaymentsCardTab")]/div/span/span'), 'class', 'radio-checked'))
 
 wait.until(ec.element_to_be_clickable((By.XPATH, '//li[contains(@class, "_generalPaymentsTab")]/div/span[following-sibling::span]'))).click()
 
