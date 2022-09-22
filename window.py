@@ -8,6 +8,7 @@ from webdriver_manager.firefox import GeckoDriverManager
 from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
+from datetime import date
 
 # https://nid.naver.com/nidlogin.login?url=https%3A%2F%2Fbooking.naver.com%2Fbooking%2F12%2Fbizes%2F714379%2Fitems%2F4559249
 # https://nid.naver.com/nidlogin.login?url=https%3A%2F%2Fbooking.naver.com%2Fbooking%2F12%2Fbizes%2F714379%2Fitems%2F4559345
@@ -49,8 +50,8 @@ while True:
 wait.until(ec.element_to_be_clickable((By.XPATH, '//*[@id="loinid"]/span/span'))).click()
 
 driver.implicitly_wait(0.5)
-clipboard_input('//*[@id="id"]', user_id)
-clipboard_input('//*[@id="pw"]', password)
+clipboard_input('//*[@id="id"]', user.get("id"))
+clipboard_input('//*[@id="pw"]', user.get("pw"))
 driver.find_element(By.XPATH, '//*[@id="log.login"]').click()
 
 ##일정선택(날짜,시간)
