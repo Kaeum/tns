@@ -16,7 +16,7 @@ from datetime import date
 # https://nid.naver.com/nidlogin.login?url=https%3A%2F%2Fbooking.naver.com%2Fbooking%2F12%2Fbizes%2F714379%2Fitems%2F4559349
 COURT_URL = "https://nid.naver.com/nidlogin.login?url=https%3A%2F%2Fbooking.naver.com%2Fbooking%2F12%2Fbizes%2F714379%2Fitems%2F4559249"
 TIME = '16:00'
-DATE = '"2022-09-28"'
+DATE = '2022-09-28'
 BANK_NAME = '신한'
 
 user = {
@@ -34,6 +34,16 @@ def clipboard_input(user_xpath, user_input):
         .perform()
     pyperclip.copy(temp_user_input)
 
+def get_court_number():
+    if(COURT_URL == "https://nid.naver.com/nidlogin.login?url=https%3A%2F%2Fbooking.naver.com%2Fbooking%2F12%2Fbizes%2F714379%2Fitems%2F4559249"):
+        return 1
+    if(COURT_URL == "https://nid.naver.com/nidlogin.login?url=https%3A%2F%2Fbooking.naver.com%2Fbooking%2F12%2Fbizes%2F714379%2Fitems%2F4559345"):
+        return 2
+    if(COURT_URL == "https://nid.naver.com/nidlogin.login?url=https%3A%2F%2Fbooking.naver.com%2Fbooking%2F12%2Fbizes%2F714379%2Fitems%2F4559346"):
+        return 3
+    if(COURT_URL == "https://nid.naver.com/nidlogin.login?url=https%3A%2F%2Fbooking.naver.com%2Fbooking%2F12%2Fbizes%2F714379%2Fitems%2F4559349"):
+        return 4
+
 driver = webdriver.Firefox(service=Service(executable_path=GeckoDriverManager().install()))
 wait = WebDriverWait(driver, 10)
 
@@ -41,6 +51,7 @@ driver.get(COURT_URL)
 driver.maximize_window()
 
 while True:
+    print(DATE, TIME, get_court_number(), "번 코트를 예약합니다.")
     user["id"] = input("NAVER 아이디를 입력하세요. \n")
     user["pw"] = input("비밀번호를 입력하세요. \n")
     is_confirmed = input("입력하신 아이디는 %s, 비밀번호는 %s입니다. 진행하시겠습니까? [Y] or [N] \n" % (user.get("id"), user.get("pw")))
@@ -62,7 +73,7 @@ element = wait.until(ec.element_to_be_clickable((By.XPATH, '//div[@id="calendar"
 if int(element.text) == date.today().month:
     driver.find_element(By.XPATH, '//a[@title="다음달"]').click()
 
-wait.until(ec.element_to_be_clickable((By.XPATH, ('//td[@data-tst_cal_datetext=%s]' % DATE)))).click()
+wait.until(ec.element_to_be_clickable((By.XPATH, ('//td[@data-tst_cal_datetext="%s"]' % DATE)))).click()
 
 #회차선택
 wait.until(ec.text_to_be_present_in_element_attribute((By.XPATH, '//a[contains(., "06:00")]'), 'class', 'on'))
